@@ -1,0 +1,54 @@
+#include <stdio.h>
+
+void sort (int stt, int end, int v[]) {
+    if (stt == end) return ; 
+
+    sort (stt, (stt+end)/2, v);
+
+    sort ((stt+end)/2+1, end, v);
+
+    int tmp[end - stt + 1], a = stt, b = (stt + end)/2 + 1;
+
+    for (int i = 0 ; i <= end - stt ; i++){
+        if (v[a] < v[b] && a <= (stt + end)/2 && b <= end) {
+            tmp [i] = v [a];
+            a++;
+        }
+        if (v[a] > v[b] && a <= (stt + end)/2 && b <= end) {
+            tmp [i] = v [b];
+            b++;
+        }
+        if (a == (stt + end)/2 + 1) {
+            tmp [i] = v [b];
+            b++;
+        }
+        if (b == (end + 1)) {
+            tmp [i] = v [a];
+            a++;
+        }
+    }
+    for (int i = 0 ; i <= end - stt ; i++){
+        v [i + stt] = tmp [i];
+    }
+    return;
+}
+
+
+int main () {
+    int tam;
+
+    scanf("%d", &tam);
+
+    int v[tam];
+
+    for (int i = 0 ; i <= tam - 1 ; i++){
+        scanf("%d", &v[i]);
+    }
+
+    sort (0 , tam - 1 , v);
+
+    for (int i = 0 ; i <= tam - 1 ; i++){
+        printf("%d,", v[i]);
+    }
+    return 0;
+}
